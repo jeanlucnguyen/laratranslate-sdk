@@ -3,8 +3,8 @@
 namespace Jeanlucnguyen\LaratranslateSdk\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Jeanlucnguyen\LaratranslateSdk\LaratranslateSdkServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
