@@ -3,6 +3,9 @@
 namespace Jeanlucnguyen\LaratranslateSdk;
 
 use Illuminate\Support\ServiceProvider;
+use Jeanlucnguyen\LaratranslateSdk\Commands\AddMissingKeys;
+use Jeanlucnguyen\LaratranslateSdk\Commands\MissingKeys;
+use Jeanlucnguyen\LaratranslateSdk\Commands\TranslateMissingKeys;
 
 class LaratranslateSdkServiceProvider extends ServiceProvider
 {
@@ -13,6 +16,9 @@ class LaratranslateSdkServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/laratranslate.php', 'laratranslate',
+        );
     }
 
     /**
@@ -22,5 +28,12 @@ class LaratranslateSdkServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                AddMissingKeys::class,
+                MissingKeys::class,
+                TranslateMissingKeys::class,
+            ]);
+        }
     }
 }
