@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Jeanlucnguyen\LaratranslateSdk\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaratranslateSdkCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laratranslate-sdk';
 
     public $description = 'My command';
 
