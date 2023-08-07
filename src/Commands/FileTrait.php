@@ -23,6 +23,13 @@ trait FileTrait
             return $data;
         }
 
-        return json_encode(eval($data), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $data = $this->readPhpFile($path);
+
+        return json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    }
+
+    protected function readPhpFile(string $path): array
+    {
+        return require $path;
     }
 }

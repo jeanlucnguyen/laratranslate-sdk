@@ -4,6 +4,7 @@ namespace Jeanlucnguyen\LaratranslateSdk\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Jeanlucnguyen\LaratranslateSdk\TranslationFile;
 
 class TranslateMissingKeys extends Command
 {
@@ -24,7 +25,7 @@ class TranslateMissingKeys extends Command
         $sourceFile = $this->option('source-file')
             ?: $this->guessSourceFile($this->argument('translated-file'), $sourceLang);
 
-        $translatedFile = $this->argument('translated-file');
+        $translatedFile = new TranslationFile($this->argument('translated-file'));
 
         $translatedLang = $this->guessLangFromPath($this->argument('translated-file'));
 
@@ -36,8 +37,8 @@ class TranslateMissingKeys extends Command
             )
             ->attach(
                 'translated_file',
-                $this->getContentFromFileAsJson(lang_path($translatedFile)),
-                basename($translatedFile)
+                $this->getContentFromFileAsJson(lang_path($translatedFile->getPath())),
+                $translatedFile->basename()
             )
             ->post(config('laratranslate.service_base_url').'/api/missing-keys/translate', [
                 'original_lang' => $sourceLang,
@@ -57,7 +58,7 @@ class TranslateMissingKeys extends Command
         return self::SUCCESS;
     }
 
-    protected function postCallHook(array $newTranslations, string $translatedFile): void
+    protected function postCallHook(array $newTranslations, TranslationFile $translatedFile): void
     {
         $this->line(json_encode($newTranslations, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
     }
