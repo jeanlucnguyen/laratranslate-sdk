@@ -2,6 +2,8 @@
 
 namespace Jeanlucnguyen\LaratranslateSdk;
 
+use RuntimeException;
+
 class PhpFileWriter
 {
     public function append(array $content, string $filepath): bool
@@ -9,10 +11,14 @@ class PhpFileWriter
         $lineToInsertContent = $this->findLineToInsertContent($filepath);
 
         $fn = fopen($filepath, 'r');
+
+        if ($fn === false) {
+            throw new RuntimeException('Unable to read file '.$filepath);
+        }
+
         $currentLine = 1;
         do {
             $newContent[] = fgets($fn);
-
             if ($currentLine === $lineToInsertContent) {
                 foreach ($content as $key => $translation) {
                     $newContent[] = $this->addTranslation($key, $translation);
@@ -31,8 +37,8 @@ class PhpFileWriter
 
     protected function findLineToInsertContent(string $filepath): int
     {
-        $tokens = token_get_all(file_get_contents($filepath));
-
+        $content = file_get_contents($filepath) ?: throw new RuntimeException('Unable to read file '.$filepath);
+        $tokens = token_get_all($content);
         $tokens = array_reverse($tokens);
 
         foreach ($tokens as $token) {

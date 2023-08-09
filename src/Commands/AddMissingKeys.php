@@ -10,7 +10,7 @@ use RuntimeException;
 class AddMissingKeys extends TranslateMissingKeys
 {
     public $signature = 'translate:add-missing-keys
-        {translated-file}: translation file in which to find missing keys
+        {translated-file?*}: translation file in which to find missing keys
         {--source-lang=}: translation file language to compare to
         {--source-file=}: translation file to compare to
         {--sort}: sort translations by key in translated file';

@@ -15,12 +15,12 @@ class TranslationFile
 
     public function isPhp(): bool
     {
-        return preg_match('/\.php$/', $this->path);
+        return (bool) preg_match('/\.php$/', $this->path);
     }
 
     public function isJson(): bool
     {
-        return preg_match('/\.json$/', $this->path);
+        return (bool) preg_match('/\.json$/', $this->path);
     }
 
     public function basename(): string

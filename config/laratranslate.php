@@ -12,4 +12,25 @@ return [
     'source_lang' => env('LARATRANSLATE_DEFAULT_SOURCE_LANG', config('app.locale')),
 
     'service_base_url' => 'https://laratranslate.jeanlucnguyen.com',
+
+    /**
+     * Commands scan the lang folder directory for available languages
+     * List folders to exclude
+     */
+    'folders_to_exclude' => [
+        'vendor',
+    ],
+
+    /**
+     * Commands scan the lang folder directory for available languages
+     * List files to exclude
+     */
+    'files_to_exclude' => [
+        'sav-de.json',
+        'sav-en.json',
+        'sav-es.json',
+        'sav-fr.json',
+        'sav-it.json',
+        'sav-pt.json',
+    ],
 ];
